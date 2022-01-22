@@ -2,6 +2,7 @@ package dev.trobanko.staffhomes.Commands;
 
 import dev.trobanko.staffhomes.Managers.StaffHomesManager;
 import dev.trobanko.staffhomes.Utils.AddColor;
+import dev.trobanko.staffhomes.Utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,12 +28,7 @@ public class StaffHomesCommands implements CommandExecutor {
         }
 
         if(args.length < 1 || args.length > 2){
-            p.sendMessage(AddColor.color("&7========&b&lStaff Homes&7========="));
-            p.sendMessage(AddColor.color("&6/staffhome set &7- &3Sets your Staff Home to your location"));
-            p.sendMessage(AddColor.color("&6/staffhome go &7- &3Go to your Staff Home location"));
-            p.sendMessage(AddColor.color("&6/staffhome player <player> &7- &3Go to another player's Staff Home"));
-            p.sendMessage(AddColor.color("&6/staffhome remove &7- &3Remove your current Staff Home location"));
-            p.sendMessage(AddColor.color("&7============================="));
+            Message.SEND(p);
             return true;
 
         }
@@ -43,7 +39,7 @@ public class StaffHomesCommands implements CommandExecutor {
             p.sendMessage(AddColor.color("&7(Use &6'/staffhome go' &7to teleport to this location)"));
             return true;
         }
-        else if (args[0].equalsIgnoreCase("go")){
+        else if (args[0].equalsIgnoreCase("go") && args[1] == null){
             if(!manager.hasStaffHome(p)){
                 p.sendMessage(AddColor.color("&cYou do not have a staff home set"));
                 p.sendMessage(AddColor.color("&7(Use &6'/staffhome set' &7to set a staff home)"));
@@ -64,19 +60,16 @@ public class StaffHomesCommands implements CommandExecutor {
             p.sendMessage(AddColor.color("&aSuccessfully deleted your staff home"));
             return true;
         }
-        else if (args[0].equalsIgnoreCase("player")){
+        else if (args[0].equalsIgnoreCase("go") && args[1] != null){
+
             if(!p.hasPermission("staffhomes.admin")){
                 p.sendMessage(AddColor.color("&cYou do not have the required permission to teleport to other player's staff home"));
-                return true;
-            }
-            if(args[1] == null){
-                p.sendMessage(AddColor.color("&cIncorrect Usage!"));
-                p.sendMessage(AddColor.color("&7(Use &6'/staffhome player <player name>' &7to go to a player's staff home)"));
                 return true;
             }
             Player target = Bukkit.getPlayerExact(args[1]);
             if(target == null){
                 p.sendMessage(AddColor.color("&c" + args[1] + " is not a valid player name!"));
+                p.sendMessage(AddColor.color("&7(Use &6'/staffhome go [<player>]' &7to go to a player's staff home)"));
                 return true;
             }
             if(!manager.hasStaffHome(target)){
@@ -85,14 +78,10 @@ public class StaffHomesCommands implements CommandExecutor {
             }
             p.teleport(manager.getStaffHome(target));
             p.sendMessage(AddColor.color("&aTeleporting to " + target.getDisplayName() + "'s staff home..."));
+
         }
         else {
-            p.sendMessage(AddColor.color("&7========&b&lStaff Homes&7========="));
-            p.sendMessage(AddColor.color("&6/staffhome set &7- &3Sets your Staff Home to your location"));
-            p.sendMessage(AddColor.color("&6/staffhome go &7- &3Go to your Staff Home location"));
-            p.sendMessage(AddColor.color("&6/staffhome player <player> &7- &3Go to a certain player's Staff Home"));
-            p.sendMessage(AddColor.color("&6/staffhome remove &7- &3Remove your current Staff Home location"));
-            p.sendMessage(AddColor.color("&7============================="));
+            Message.SEND(p);
         }
         return true;
     }
