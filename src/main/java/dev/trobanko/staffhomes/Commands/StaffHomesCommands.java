@@ -19,6 +19,7 @@ public class StaffHomesCommands implements CommandExecutor {
         }
 
         Player p = (Player) sender;
+        StaffHomesManager manager = new StaffHomesManager();
 
         if(!p.hasPermission("staffhomes.use") && (!p.hasPermission("staffhomes.admin"))){
             p.sendMessage(AddColor.color("&cYou do not have permissions to use this command!"));
@@ -37,29 +38,29 @@ public class StaffHomesCommands implements CommandExecutor {
         }
 
         if(args[0].equalsIgnoreCase("set")){
-            StaffHomesManager.addStaffHome(p, p.getLocation());
+            manager.addStaffHome(p, p.getLocation());
             p.sendMessage(AddColor.color("&aSuccessfully set your staff home to this location!"));
             p.sendMessage(AddColor.color("&7(Use &6'/staffhome go' &7to teleport to this location)"));
             return true;
         }
         else if (args[0].equalsIgnoreCase("go")){
-            if(!StaffHomesManager.hasStaffHome(p)){
+            if(!manager.hasStaffHome(p)){
                 p.sendMessage(AddColor.color("&cYou do not have a staff home set"));
                 p.sendMessage(AddColor.color("&7(Use &6'/staffhome set' &7to set a staff home)"));
                 return true;
             }
-            p.teleport(StaffHomesManager.getStaffHome(p));
+            p.teleport(manager.getStaffHome(p));
             p.sendMessage(AddColor.color("&aTeleporting to your staff home..."));
             p.sendMessage(AddColor.color("&7(Use &6'/staffhome remove' &7to remove this staff home)"));
             return true;
         }
         else if (args[0].equalsIgnoreCase("remove")){
-            if(!StaffHomesManager.hasStaffHome(p)){
+            if(!manager.hasStaffHome(p)){
                 p.sendMessage(AddColor.color("&cYou do not have a staff home set"));
                 p.sendMessage(AddColor.color("&7(Use &6'/staffhome set' &7to set a staff home)"));
                 return true;
             }
-            StaffHomesManager.removeStaffHome(p);
+            manager.removeStaffHome(p);
             p.sendMessage(AddColor.color("&aSuccessfully deleted your staff home"));
             return true;
         }
@@ -78,11 +79,11 @@ public class StaffHomesCommands implements CommandExecutor {
                 p.sendMessage(AddColor.color("&c" + args[1] + " is not a valid player name!"));
                 return true;
             }
-            if(!StaffHomesManager.hasStaffHome(target)){
+            if(!manager.hasStaffHome(target)){
                 p.sendMessage(AddColor.color("&c" + target.getDisplayName() +" does not have a staff home set!"));
                 return true;
             }
-            p.teleport(StaffHomesManager.getStaffHome(target));
+            p.teleport(manager.getStaffHome(target));
             p.sendMessage(AddColor.color("&aTeleporting to " + target.getDisplayName() + "'s staff home..."));
         }
         else {

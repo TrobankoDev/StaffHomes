@@ -11,20 +11,24 @@ public final class StaffHomes extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
+        StaffHomesManager manager = new StaffHomesManager();
+
         getCommand("staffhome").setExecutor(new StaffHomesCommands());
 
         HomesConfig.setup(this);
         HomesConfig.save();
 
         if(HomesConfig.configExists()){
-            StaffHomesManager.configToMap();
-            StaffHomesManager.deleteHomes();
+            manager.configToMap();
+            manager.deleteHomes();
         }
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        StaffHomesManager.mapToConfig();
+        StaffHomesManager manager = new StaffHomesManager();
+
+        manager.mapToConfig();
     }
 }
