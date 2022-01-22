@@ -1,0 +1,12 @@
+name: StaffHomes
+version: '${project.version}'
+main: dev.trobanko.staffhomes.StaffHomes
+api-version: 1.18
+authors: [ Trobanko ]
+description: Implements temp homes so that staff members can set locations without interfering with their homes
+commands:
+  staffhome:
+    description: The main Staff Homes command
+    aliases:
+      - staffhomes
+      - sh

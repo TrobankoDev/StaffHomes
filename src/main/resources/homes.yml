@@ -1,0 +1,12 @@
+staff-homes:
+  players:
+    playername:
+      - X
+      - Y
+      - Z
+      - 'world'
+    playername2:
+      - X
+      - Y
+      - Z
+      - 'world'
