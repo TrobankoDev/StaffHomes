@@ -39,7 +39,7 @@ public class StaffHomesCommands implements CommandExecutor {
             p.sendMessage(AddColor.color("&7(Use &6'/staffhome go' &7to teleport to this location)"));
             return true;
         }
-        else if (args[0].equalsIgnoreCase("go") && args[1] == null){
+        else if (args[0].equalsIgnoreCase("go") && args.length == 1){
             if(!manager.hasStaffHome(p)){
                 p.sendMessage(AddColor.color("&cYou do not have a staff home set"));
                 p.sendMessage(AddColor.color("&7(Use &6'/staffhome set' &7to set a staff home)"));
@@ -60,7 +60,7 @@ public class StaffHomesCommands implements CommandExecutor {
             p.sendMessage(AddColor.color("&aSuccessfully deleted your staff home"));
             return true;
         }
-        else if (args[0].equalsIgnoreCase("go") && args[1] != null){
+        else if (args[0].equalsIgnoreCase("go") && args.length == 2){
 
             if(!p.hasPermission("staffhomes.admin")){
                 p.sendMessage(AddColor.color("&cYou do not have the required permission to teleport to other player's staff home"));
